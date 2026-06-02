@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function callAlert(msg) {
+            let msg = document.getElementById('input1').value;
+            alert(msg);
+        }
+    </script>
+</head>
+<body>
+    <!-- <button onclick="alert('Hello, World!')">CLick Me</button> -->
+     <input type="text" id="input1" size="15" placeholder="문자열 입력">
+    <button onclick="callAlert()">CLick Me</button>
+</body>
+</html>
