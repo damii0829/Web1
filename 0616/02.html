@@ -7,29 +7,56 @@
     <script src="https://code.jquery.com/jquery-4.0.0.js"></script>
     <script>
         $(document).ready(
-            function() {
-                $("h1").click(
-                    function() {
+            function(){
+            $("h1").click(
+                function(){
+                    $(this).css({
+                        background : "red",
+                        color : "white",
+                        width : "200px",
+                        height : "50px",
+                    });
+                }
+            );
+ 
+            $("h1").dblclick(
+                function(){
+                        $(this).css({  
+                            background : "",
+                            color : ""
+                          });
+                        }
+                    );
+                });
+</script>
+</head>
+<body>
+    <script src="https://code.jquery.com/jquery-4.0.0.js"></script>
+<script>
+    $(document).ready(
+        function(){
+        $("h1").click(
+            function(){
+                $(this).css({
+                    background : "red",
+                    color : "white",
+                    width : "200px",
+                    height : "50px",
+                });
+            }
+        );
+ 
+                $("h1").dblclick(
+                    function(){
                         $(this).css({
-                            background: "red",
-                            color: "white",
-                            width: "200px",
-                            height: "50px",
+                            background : "",
+                            color : ""
                         });
                     }
                 );
-                    $("h1").dblclick(
-                    function() {
-                        $(this).css({
-                            background: "",
-                            color: ""
-                        });
-                    }
-                );  
             });
-    </script>
-</head>
-<body>
+ 
+</script>
     <h1>Click Here</h1>
 </body>
 </html>
