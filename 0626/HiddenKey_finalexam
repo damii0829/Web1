@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hidden Key 방탈출 카페</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Pretendard', 'Noto Sans KR', Arial, sans-serif;
+      background-color: #0b0b10;
+      color: #f5f5f5;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(5, 5, 10, 0.9);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 18px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+      color: #f6c453;
+    }
+
+    .menu {
+      display: flex;
+      gap: 28px;
+      font-size: 15px;
+      color: #ddd;
+    }
+
+    .menu a:hover {
+      color: #f6c453;
+    }
+
+    .hero {
+      min-height: 100vh;
+      padding: 160px 30px 100px;
+      background:
+        linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.92)),
+        url('https://images.unsplash.com/photo-1519074069444-1ba4fff66d16?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .hero small {
+      color: #f6c453;
+      font-weight: 700;
+      letter-spacing: 3px;
+    }
+
+    .hero h1 {
+      margin-top: 20px;
+      font-size: 64px;
+      line-height: 1.15;
+      max-width: 760px;
+    }
+
+    .hero p {
+      margin-top: 24px;
+      max-width: 620px;
+      color: #ccc;
+      font-size: 18px;
+    }
+
+    .highlight {
+      color: #f6c453;
+      font-weight: 800;
+    }
+
+    .hero-buttons {
+      margin-top: 36px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 26px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+
+    .btn-primary {
+      background: #f6c453;
+      color: #121212;
+      border: none;
+    }
+
+    .btn-outline {
+      border: 1px solid #f6c453;
+      color: #f6c453;
+    }
+
+    section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 90px 30px;
+    }
+
+    .section-title {
+      margin-bottom: 36px;
+    }
+
+    .section-title span {
+      color: #f6c453;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .section-title h2 {
+      margin-top: 10px;
+      font-size: 36px;
+    }
+
+    .about-box {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .info-card,
+    .theme-card,
+    .stats-card,
+    .theme-stats,
+    .notice-list {
+      background: #15151f;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .info-card {
+      padding: 30px;
+      border-radius: 18px;
+    }
+
+    .info-card h3 {
+      color: #f6c453;
+      margin-bottom: 12px;
+    }
+
+    .info-card p {
+      color: #bbb;
+      font-size: 15px;
+    }
+
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+    }
+
+    .theme-card {
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .theme-img {
+      height: 180px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .theme-content {
+      padding: 22px;
+    }
+
+    .theme-content h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+      color: #f6c453;
+    }
+
+    .theme-content p {
+      color: #bbb;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .easy {
+      background-color: #233b2a;
+      color: #8cff9d;
+    }
+
+    .normal {
+      background-color: #3b3523;
+      color: #ffd56a;
+    }
+
+    .hard {
+      background-color: #4a1e1e;
+      color: #ff8b8b;
+    }
+
+    .premium {
+      background-color: #32204a;
+      color: #cfa6ff;
+    }
+
+    .tag-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      padding: 5px 9px;
+      border-radius: 20px;
+      background: rgba(246,196,83,0.12);
+      color: #f6c453;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .stats-box {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .stats-card {
+      padding: 30px;
+      border-radius: 18px;
+      text-align: center;
+    }
+
+    .stats-card h3 {
+      color: #ddd;
+      margin-bottom: 10px;
+    }
+
+    .stats-card strong {
+      display: block;
+      font-size: 42px;
+      color: #f6c453;
+    }
+
+    .stats-card p {
+      color: #aaa;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    .theme-stats {
+      border-radius: 18px;
+      padding: 30px;
+    }
+
+    .stat-item {
+      display: grid;
+      grid-template-columns: 150px 1fr 60px;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .stat-item span {
+      font-weight: 700;
+      color: #ddd;
+    }
+
+    .stat-item b {
+      color: #f6c453;
+      text-align: right;
+    }
+
+    .bar {
+      height: 14px;
+      background: #20202c;
+      border-radius: 30px;
+      overflow: hidden;
+    }
+
+    .fill {
+      height: 100%;
+      background: #f6c453;
+      border-radius: 30px;
+    }
+
+    .rate68 { width: 68%; }
+    .rate44 { width: 44%; }
+    .rate73 { width: 73%; }
+    .rate29 { width: 29%; }
+
+    .reservation {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #11111a;
+      border-radius: 24px;
+      padding: 34px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .reservation-layout {
+      display: flex;
+      gap: 70px;
+      align-items: flex-start;
+    }
+
+    .left-area,
+    .right-area {
+      width: 50%;
+    }
+
+    .date-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .date-box {
+      padding: 16px 8px;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 8px;
+      background: #20202c;
+      color: #ddd;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+
+    .time-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .time-buttons button {
+      padding: 10px 16px;
+      border-radius: 8px;
+      background: #20202c;
+      color: #ddd;
+      border: 1px solid transparent;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .date-box:hover,
+    .time-buttons button:hover {
+      background: #f6c453;
+      color: #121212;
+    }
+
+    .form-box label {
+      display: block;
+      margin: 16px 0 8px;
+      font-size: 14px;
+      color: #ddd;
+      font-weight: 700;
+    }
+
+    .form-box label:first-child {
+      margin-top: 0;
+    }
+
+    .form-box input,
+    .form-box select,
+    .form-box textarea {
+      width: 100%;
+      padding: 13px 14px;
+      border: none;
+      border-radius: 8px;
+      background: #20202c;
+      color: #fff;
+      outline: none;
+    }
+
+    .form-box textarea {
+      height: 90px;
+      resize: none;
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #15151f;
+    }
+
+    th,
+    td {
+      padding: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+    }
+
+    th {
+      background: rgba(246,196,83,0.12);
+      color: #f6c453;
+    }
+
+    .notice-list {
+      border-radius: 18px;
+      padding: 28px;
+    }
+
+    .notice-list li {
+      margin-bottom: 12px;
+      color: #ccc;
+    }
+
+    .location-box {
+      background: linear-gradient(135deg, #15151f, #221a2c);
+      border-radius: 24px;
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 30px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .location-box h3 {
+      color: #f6c453;
+    }
+
+    .map-dummy {
+      min-height: 240px;
+      border-radius: 18px;
+      background:
+        linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+        url('https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+    }
+
+    footer {
+      padding: 35px 30px;
+      text-align: center;
+      background: #050508;
+      color: #888;
+      font-size: 14px;
+    }
+
+
+    /* =========================
+       JavaScript / jQuery 효과용 스타일
+       ========================= */
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    header {
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    header.scrolled {
+      background: rgba(5, 5, 10, 0.98);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+    }
+
+    .menu a {
+      transition: color 0.25s ease;
+      position: relative;
+    }
+
+    .menu a.active {
+      color: #f6c453;
+      font-weight: 800;
+    }
+
+    .menu a.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 100%;
+      height: 2px;
+      background: #f6c453;
+      border-radius: 10px;
+    }
+
+    .btn,
+    .info-card,
+    .theme-card,
+    .stats-card,
+    .date-box,
+    .time-buttons button {
+      transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, border 0.25s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(246,196,83,0.24);
+    }
+
+    .info-card:hover,
+    .stats-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(246,196,83,0.55);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.3);
+    }
+
+    .theme-card {
+      cursor: pointer;
+    }
+
+    .theme-img {
+      transition: transform 0.35s ease, filter 0.35s ease;
+    }
+
+    .theme-card:hover .theme-img,
+    .theme-card.hovered .theme-img {
+      transform: scale(1.08);
+      filter: brightness(1.12);
+    }
+
+    .theme-card:hover,
+    .theme-card.hovered,
+    .theme-card.selected {
+      transform: translateY(-10px);
+      border-color: rgba(246,196,83,0.75);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.42);
+    }
+
+    .theme-card.selected {
+      outline: 2px solid rgba(246,196,83,0.35);
+    }
+
+    .date-box.selected,
+    .time-buttons button.selected {
+      background: #f6c453;
+      color: #121212;
+      border-color: #f6c453;
+      box-shadow: 0 8px 20px rgba(246,196,83,0.18);
+    }
+
+    .time-buttons button.soldout,
+    .time-buttons button:disabled {
+      background: #2b2b34;
+      color: #777;
+      cursor: not-allowed;
+      opacity: 0.58;
+      text-decoration: line-through;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .reset-btn {
+      margin-top: 12px;
+      width: 100%;
+      text-align: center;
+      background: transparent;
+    }
+
+    .reservation-result {
+      display: none;
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 12px;
+      background: rgba(246,196,83,0.12);
+      border: 1px solid rgba(246,196,83,0.4);
+      color: #f5f5f5;
+      font-size: 14px;
+    }
+
+    .reservation-result.error {
+      background: rgba(255,87,87,0.12);
+      border-color: rgba(255,87,87,0.5);
+      color: #ffb3b3;
+    }
+
+    .fade-target {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-target.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .theme-stats .fill {
+      width: 0;
+      transition: width 1.2s ease;
+    }
+
+    .theme-stats.show .rate68 { width: 68%; }
+    .theme-stats.show .rate44 { width: 44%; }
+    .theme-stats.show .rate73 { width: 73%; }
+    .theme-stats.show .rate29 { width: 29%; }
+
+
+    /* =========================
+       추가 상호작용 효과
+       ========================= */
+
+    #loadingScreen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at center, #1b1724 0%, #050508 70%);
+      color: #f6c453;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .loader-key {
+      font-size: 46px;
+      margin-bottom: 14px;
+      animation: keySpin 1.4s infinite ease-in-out;
+    }
+
+    @keyframes keySpin {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(18deg) scale(1.12); }
+      100% { transform: rotate(0deg) scale(1); }
+    }
+
+    #scrollProgress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 4px;
+      z-index: 9998;
+      background: #f6c453;
+      box-shadow: 0 0 12px rgba(246,196,83,0.8);
+    }
+
+    header, main, footer {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h1 .typing-cursor {
+      display: inline-block;
+      color: #f6c453;
+      animation: blink 0.8s infinite;
+    }
+
+    @keyframes blink {
+      0%, 45% { opacity: 1; }
+      46%, 100% { opacity: 0; }
+    }
+
+    .theme-card.clicked-effect {
+      animation: clickPop 0.35s ease;
+    }
+
+    @keyframes clickPop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+      100% { transform: scale(1); }
+    }
+
+    .theme-detail-box {
+        margin-top: 18px;
+        padding: 16px;
+        border-radius: 14px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(246,196,83,0.22);
+        color: #ddd;
+        font-size: 14px;
+    }
+
+    .theme-detail-box strong {
+        color: #f6c453;
+    }
+
+    .input-focus {
+      box-shadow: 0 0 0 2px rgba(246,196,83,0.35);
+      background: #262633 !important;
+    }
+
+    .shake {
+      animation: shake 0.32s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-3px); }
+    }
+
+    .char-count {
+      margin-top: 6px;
+      text-align: right;
+      color: #aaa;
+      font-size: 12px;
+    }
+
+    .notice-list li {
+      cursor: pointer;
+      transition: color 0.25s ease, padding-left 0.25s ease;
+    }
+
+    .notice-list li:hover {
+      color: #f6c453;
+      padding-left: 8px;
+    }
+
+    .notice-detail {
+      display: none;
+      margin: 8px 0 8px 0;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(246,196,83,0.1);
+      color: #ddd;
+      font-size: 13px;
+    }
+
+    tbody tr {
+      transition: background 0.25s ease, transform 0.25s ease;
+    }
+
+    tbody tr:hover {
+      background: rgba(246,196,83,0.12);
+      transform: scale(1.01);
+    }
+
+    .map-dummy {
+      transition: transform 0.35s ease, filter 0.35s ease;
+    }
+
+    .map-dummy:hover {
+      transform: scale(1.03);
+      filter: brightness(1.2);
+    }
+
+    #topBtn {
+      display: none;
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 9997;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: none;
+      background: #f6c453;
+      color: #111;
+      font-size: 20px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.45);
+    }
+
+    #topBtn:hover {
+      transform: translateY(-4px);
+    }
+
+    .modal-bg {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9996;
+      background: rgba(0,0,0,0.75);
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+    }
+
+    .modal-box {
+      width: min(420px, 100%);
+      padding: 28px;
+      border-radius: 20px;
+      background: #15151f;
+      border: 1px solid rgba(246,196,83,0.45);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.55);
+      text-align: center;
+    }
+
+    .modal-box h3 {
+      color: #f6c453;
+      margin-bottom: 12px;
+    }
+
+    .modal-box p {
+      color: #ccc;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .confetti {
+      position: fixed;
+      top: -10px;
+      width: 8px;
+      height: 12px;
+      background: #f6c453;
+      z-index: 10000;
+      animation: fall 1.8s linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(105vh) rotate(720deg);
+        opacity: 0;
+      }
+    } 
+
+    @media (max-width: 900px) {
+      .menu {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 42px;
+      }
+
+      .about-box,
+      .theme-grid,
+      .stats-box,
+      .guide-grid,
+      .location-box {
+        grid-template-columns: 1fr;
+      }
+
+      .reservation-layout {
+        flex-direction: column;
+      }
+
+      .left-area,
+      .right-area {
+        width: 100%;
+      }
+
+      .date-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stat-item {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-item b {
+        text-align: left;
+      }
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+
+<body>
+
+  <div id="loadingScreen">
+    <div class="loader-key">🔑</div>
+    <div>HIDDEN KEY LOADING</div>
+  </div>
+  <div id="scrollProgress"></div>
+  <header>
+    <nav class="nav">
+      <a href="#" class="logo">Hidden Key</a>
+
+      <div class="menu">
+        <a href="#about">소개</a>
+        <a href="#theme">테마</a>
+        <a href="#stats">성공률</a>
+        <a href="#reservation">예약하기</a>
+        <a href="#guide">이용안내</a>
+        <a href="#location">위치</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <small>ESCAPE ROOM CAFE</small>
+        <h1>당신은 이 방에서<br>탈출할 수 있을까?</h1>
+        <p>
+          Hidden Key는 몰입형 스토리와 다양한 난이도의 테마를 제공하는 방탈출 카페입니다.
+          <br>
+          테마별 탈출 <span class="highlight">성공률</span>을 확인하고 자신에게 맞는 테마를 선택할 수 있습니다.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#theme" class="btn btn-primary">테마 보기</a>
+          <a href="#stats" class="btn btn-outline">탈출 성공률 확인</a>
+          <a href="#reservation" class="btn btn-primary">예약하기</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="section-title">
+        <span>ABOUT</span>
+        <h2>Hidden Key 소개</h2>
+      </div>
+
+      <div class="about-box">
+        <div class="info-card">
+          <h3>몰입형 스토리</h3>
+          <p>각 테마마다 독립적인 세계관과 사건 흐름을 구성하여 실제 이야기 속에 들어온 듯한 경험을 제공합니다.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>다양한 난이도</h3>
+          <p>방세포부터 고인물까지 즐길 수 있도록 쉬움, 보통, 어려움 단계의 테마를 제공합니다.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>탈출 가능성 정보</h3>
+          <p>테마별 성공률과 난이도를 함께 제공하여 사용자가 자신의 수준에 맞는 테마를 선택할 수 있도록 돕습니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="theme">
+      <div class="section-title">
+        <span>THEMES</span>
+        <h2>테마</h2>
+      </div>
+
+      <div class="theme-grid">
+        <article class="theme-card">
+          <div class="theme-img" style="background-image:url('https://images.unsplash.com/photo-1509248961158-e54f6934749c?auto=format&fit=crop&w=900&q=80')"></div>
+          <div class="theme-content">
+            <span class="status normal">방린이 도전</span>
+            <h3>사라진 연구원</h3>
+            <p>폐쇄된 연구소. 흔적도 없이 사라진 연구원. 남겨진 실험 기록 속에서 진실을 추적한다.</p>
+            <div class="tag-wrap">
+              <span class="tag">추리</span>
+              <span class="tag">난이도 ★★★</span>
+              <span class="tag">70분</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="theme-card">
+          <div class="theme-img" style="background-image:url('https://images.unsplash.com/photo-1505751172876-fa1923c5c528?q=80&w=1200&auto=format&fit=crop')"></div>
+          <div class="theme-content">
+            <span class="status hard">공포 주의</span>
+            <h3>새벽의 병원</h3>
+            <p>새벽 3시, 불 꺼진 병동. 끊임없이 울리는 호출벨과 정체불명의 발자국 소리.</p>
+            <div class="tag-wrap">
+              <span class="tag">공포</span>
+              <span class="tag">난이도 ★★★★</span>
+              <span class="tag">75분</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="theme-card">
+          <div class="theme-img" style="background-image:url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=1200&auto=format&fit=crop')"></div>
+          <div class="theme-content">
+            <span class="status easy">방세포 추천</span>
+            <h3>마법사의 서재</h3>
+            <p>봉인된 서재와 금지된 주문서. 숨겨진 장치를 해독하며 마법사의 비밀에 접근한다.</p>
+            <div class="tag-wrap">
+              <span class="tag">판타지</span>
+              <span class="tag">난이도 ★★</span>
+              <span class="tag">85분</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="theme-card">
+          <div class="theme-img" style="background-image:url('https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=900&q=80')"></div>
+          <div class="theme-content">
+            <span class="status premium">프리미엄</span>
+            <h3>🅿 블랙아웃</h3>
+            <p>도시 전체가 정전된 밤. 제한된 시야 속에서 탈출 루트를 찾아야 한다.</p>
+            <div class="tag-wrap">
+              <span class="tag">?</span>
+              <span class="tag">난이도 ★★★★★</span>
+              <span class="tag">100분</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="stats">
+      <div class="section-title">
+        <span>STATS</span>
+        <h2>실시간 탈출 성공률</h2>
+      </div>
+
+      <div class="stats-box">
+        <div class="stats-card">
+          <h3>오늘 예약 팀</h3>
+          <strong>18팀</strong>
+          <p>현재 기준 예약 현황</p>
+        </div>
+
+        <div class="stats-card">
+          <h3>오늘 탈출 성공</h3>
+          <strong>7팀</strong>
+          <p>진행 완료 팀 기준</p>
+        </div>
+
+        <div class="stats-card">
+          <h3>평균 성공률</h3>
+          <strong>54%</strong>
+          <p>전체 테마 평균</p>
+        </div>
+      </div>
+
+      <div class="theme-stats">
+        <div class="stat-item">
+          <span>사라진 연구원</span>
+          <div class="bar"><div class="fill rate68"></div></div>
+          <b>68%</b>
+        </div>
+
+        <div class="stat-item">
+          <span>새벽의 병원</span>
+          <div class="bar"><div class="fill rate44"></div></div>
+          <b>44%</b>
+        </div>
+
+        <div class="stat-item">
+          <span>마법사의 서재</span>
+          <div class="bar"><div class="fill rate73"></div></div>
+          <b>73%</b>
+        </div>
+
+        <div class="stat-item">
+          <span>🅿 블랙아웃</span>
+          <div class="bar"><div class="fill rate29"></div></div>
+          <b>29%</b>
+        </div>
+      </div>
+    </section>
+
+    <div class="reservation" id="reservation">
+      <div class="reservation-layout">
+        <div class="left-area">
+          <h3>날짜 선택</h3>
+
+          <div class="date-grid">
+            <button type="button" class="date-box">7/1<br>수</button>
+            <button type="button" class="date-box">7/2<br>목</button>
+            <button type="button" class="date-box">7/3<br>금</button>
+            <button type="button" class="date-box">7/4<br>토</button>
+            <button type="button" class="date-box">7/5<br>일</button>
+            <button type="button" class="date-box">7/6<br>월</button>
+            <button type="button" class="date-box">7/7<br>화</button>
+          </div>
+
+          <h3 style="margin-top:30px;">시간 선택</h3>
+
+          <div class="time-buttons">
+            <button type="button">11:00</button>
+            <button type="button">13:00</button>
+            <button type="button">15:00</button>
+            <button type="button">17:00</button>
+            <button type="button">19:00</button>
+            <button type="button">21:00</button>
+          </div>
+        </div>
+
+        <div class="right-area">
+          <div class="form-box">
+            <label for="themeSelect">테마 선택</label>
+            <select id="themeSelect">
+              <option>사라진 연구원</option>
+              <option>새벽의 병원</option>
+              <option>마법사의 서재</option>
+              <option>🅿 블랙아웃</option>
+            </select>
+
+            <label for="name">예약자 이름</label>
+            <input type="text" id="name" placeholder="이름을 입력하세요">
+
+            <label for="phone">연락처</label>
+            <input type="tel" id="phone" placeholder="010-0000-0000">
+
+            <label for="people">인원 수</label>
+            <input type="text" id="people" placeholder="ex) 2명">
+
+            <label for="memo">요청사항</label>
+            <textarea id="memo" placeholder="요청사항을 입력하세요"></textarea>
+
+            <button type="button" id="reserveBtn" class="btn btn-primary reserve-btn" style="margin-top:20px; width:100%;">
+              예약하기
+            </button>
+
+            <button type="button" id="resetBtn" class="btn btn-outline reset-btn">
+              초기화
+            </button>
+
+            <div id="reservationResult" class="reservation-result"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section id="guide">
+      <div class="section-title">
+        <span>GUIDE</span>
+        <h2>이용 안내</h2>
+      </div>
+
+      <div class="guide-grid">
+        <table>
+          <thead>
+            <tr>
+              <th>인원</th>
+              <th>1인 가격</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>2인</td>
+              <td>25,000원</td>
+            </tr>
+            <tr>
+              <td>3인</td>
+              <td>24,000원</td>
+            </tr>
+            <tr>
+              <td>4인 이상</td>
+              <td>23,000원</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <ul class="notice-list">
+          <li>예약시 문자 또는 카카오톡 알림 확인해주세요.</li>
+          <li>예약 시간 15분 전까지 매장에 도착해 주세요.</li>
+          <li>테마 입장 후에는 환불이 어렵습니다.</li>
+          <li>테마 내부 소품 파손 시 별도 비용이 발생할 수 있습니다.</li>
+          <li>공포 테마는 심약자 또는 임산부에게 권장하지 않습니다.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="location">
+      <div class="section-title">
+        <span>LOCATION</span>
+        <h2>오시는 길</h2>
+      </div>
+
+      <div class="location-box">
+        <div>
+          <h3>Hidden Key 강남점</h3>
+          <p style="margin-top:16px; color:#ccc;">서울특별시 강남구 미스터리로 404, 지하 1층</p>
+          <p style="margin-top:8px; color:#ccc;">영업시간: 매일 11:00 - 23:00</p>
+          <p style="margin-top:8px; color:#ccc;">문의: 02-2007-0829</p>
+          <p style="margin-top:20px; color:#aaa;">
+            폴리역에서 도보 5분 거리에 위치해 있으며 예약 시간 15분 전에 매장에 도착해주세요.
+          </p>
+        </div>
+
+        <div class="map-dummy"></div>
+      </div>
+    </section>
+  </main>
+
+  <button type="button" id="topBtn">↑</button>
+
+  <div class="modal-bg" id="reserveModal">
+    <div class="modal-box">
+      <h3>예약 확인 완료 🔑</h3>
+      <p>예약 완료되었습니다.<br></p>
+      <button type="button" class="btn btn-primary" id="modalClose">확인</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 Hidden Key Escape Room Cafe. HTML5 & CSS3 Homepage Project.</p>
+  </footer>
+
+  <script>
+    $(function () {
+      let selectedDate = "";
+      let selectedTime = "";
+      let statsAnimated = false;
+
+      // 테마별 시간표 데이터
+      const timeTable = {
+        "사라진 연구원": ["11:00", "13:00", "15:00", "17:00", "19:00", "21:00"],
+        "새벽의 병원": ["11:30", "13:30", "15:30", "17:30", "19:30", "21:30"],
+        "마법사의 서재": ["12:00", "14:00", "16:00", "18:00", "20:00"],
+        "🅿 블랙아웃": ["12:30", "15:00", "17:30", "20:00"]
+      };
+
+      // 인기 테마 일부 시간 마감 처리
+      const soldOutTable = {
+        "사라진 연구원": ["19:00"],
+        "새벽의 병원": ["17:30", "21:30"],
+        "마법사의 서재": ["20:00"],
+        "🅿 블랙아웃": ["20:00"]
+      };
+
+      // 화면에 보이면 자연스럽게 나타나는 효과
+      $(".info-card, .theme-card, .stats-card, .theme-stats, .reservation, .guide-grid, .location-box").addClass("fade-target");
+
+      // 메뉴 클릭 시 jQuery animate로 부드럽게 이동
+      $(".menu a, .hero-buttons a").on("click", function (e) {
+        const target = $(this).attr("href");
+
+        if (target && target.startsWith("#") && $(target).length) {
+          e.preventDefault();
+
+          $("html, body").animate({
+            scrollTop: $(target).offset().top - 75
+          }, 600);
+        }
+      });
+
+      // 테마 카드 hover 효과
+      $(".theme-card").hover(
+        function () {
+          $(this).addClass("hovered");
+          $(this).find(".tag").stop().fadeTo(180, 1);
+        },
+        function () {
+          $(this).removeClass("hovered");
+          $(this).find(".tag").stop().fadeTo(180, 0.82);
+        }
+      );
+
+      // 테마 카드 클릭 시 예약 폼의 테마 자동 선택
+      $(".theme-card").on("click", function () {
+        const themeName = $(this).find("h3").text();
+
+        $(".theme-card").removeClass("selected");
+        $(this).addClass("selected");
+
+        $("#themeSelect").val(themeName).trigger("change");
+
+        $("html, body").animate({
+          scrollTop: $("#reservation").offset().top - 75
+        }, 100);
+      });
+
+      // 테마 변경 시 시간표 동적 변경
+      $("#themeSelect").on("change", function () {
+        selectedTime = "";
+        renderTimeButtons($(this).val());
+        $("#reservationResult").fadeOut(150);
+      });
+
+      function renderTimeButtons(theme) {
+        const times = timeTable[theme];
+        const soldOutTimes = soldOutTable[theme] || [];
+
+        $(".time-buttons").empty();
+
+        times.forEach(function (time) {
+          const button = $("<button type='button'></button>").text(time);
+
+          if (soldOutTimes.includes(time)) {
+            button.addClass("soldout").prop("disabled", true).text(time + " 마감");
+          }
+
+          $(".time-buttons").append(button);
+        });
+      }
+
+      // 날짜 선택 상태 유지
+      $(".date-box").on("click", function () {
+        $(".date-box").removeClass("selected");
+        $(this).addClass("selected");
+
+        selectedDate = $(this).text().replace(/\s+/g, " ");
+        $("#reservationResult").fadeOut(150);
+      });
+
+      // 시간 선택 상태 유지
+      $(".time-buttons").on("click", "button:not(:disabled)", function () {
+        $(".time-buttons button").removeClass("selected");
+        $(this).addClass("selected");
+
+        selectedTime = $(this).text();
+        $("#reservationResult").fadeOut(150);
+      });
+
+      // 예약하기 버튼 클릭 시 입력값 확인 후 결과 출력
+      $("#reserveBtn").on("click", function () {
+        const theme = $("#themeSelect").val();
+        const name = $("#name").val().trim();
+        const phone = $("#phone").val().trim();
+        const people = $("#people").val().trim();
+        const memo = $("#memo").val().trim();
+
+        if (!selectedDate || !selectedTime || !name || !phone || !people) {
+          $("#reservationResult")
+            .addClass("error")
+            .html("⚠ 날짜, 시간, 이름, 연락처, 인원 수를 모두 입력해야 예약이 가능합니다.")
+            .hide()
+            .fadeIn(250);
+          return;
+        }
+
+        $("#reservationResult")
+          .removeClass("error")
+          .html(
+            "<strong>예약 정보가 확인되었습니다.</strong><br>" +
+            "테마: " + theme + "<br>" +
+            "날짜: " + selectedDate + "<br>" +
+            "시간: " + selectedTime + "<br>" +
+            "예약자: " + name + "<br>" +
+            "연락처: " + phone + "<br>" +
+            "인원: " + people + "<br>" +
+            "요청사항: " + (memo || "없음")
+          )
+          .hide()
+          .fadeIn(350);
+      });
+
+      // 초기화
+      $("#resetBtn").on("click", function () {
+        selectedDate = "";
+        selectedTime = "";
+
+        $(".date-box, .time-buttons button, .theme-card").removeClass("selected");
+        $(".form-box input, .form-box textarea").val("");
+        $("#themeSelect").val("사라진 연구원");
+        renderTimeButtons("사라진 연구원");
+
+        $("#reservationResult")
+          .removeClass("error")
+          .html("내용이 초기화되었습니다.")
+          .hide()
+          .fadeIn(250)
+          .delay(900)
+          .fadeOut(300);
+      });
+
+      // 스크롤 시 헤더 변화, 메뉴 활성화, 카드 fade-in, 성공률 애니메이션
+      $(window).on("scroll", function () {
+        const scrollTop = $(this).scrollTop();
+
+        $("header").toggleClass("scrolled", scrollTop > 30);
+
+        $(".fade-target").each(function () {
+          const targetTop = $(this).offset().top;
+          const windowBottom = scrollTop + $(window).height();
+
+          if (windowBottom > targetTop + 80) {
+            $(this).addClass("show");
+          }
+        });
+
+        if ($("#stats").length && scrollTop + $(window).height() > $("#stats").offset().top + 150) {
+          $(".theme-stats").addClass("show");
+
+          if (!statsAnimated) {
+            animateStatsNumber();
+            statsAnimated = true;
+          }
+        }
+
+        $("section, .reservation").each(function () {
+          const id = $(this).attr("id");
+
+          if (id && scrollTop >= $(this).offset().top - 120) {
+            $(".menu a").removeClass("active");
+            $(".menu a[href='#" + id + "']").addClass("active");
+          }
+        });
+      }).trigger("scroll");
+
+      function animateStatsNumber() {
+        $(".stats-card strong").each(function () {
+          const item = $(this);
+          const originalText = item.text();
+          const number = parseInt(originalText, 10);
+          const suffix = originalText.replace(number, "");
+
+          $({ count: 0 }).animate({ count: number }, {
+            duration: 900,
+            easing: "swing",
+            step: function (now) {
+              item.text(Math.floor(now) + suffix);
+            },
+            complete: function () {
+              item.text(originalText);
+            }
+          });
+        });
+      }
+
+      // 첫 화면 기본 시간표 세팅
+      renderTimeButtons($("#themeSelect").val());
+    });
+  </script>
+
+
+  <script>
+    $(function () {
+      // 로딩 화면 fadeOut
+      setTimeout(function () {
+        $("#loadingScreen").fadeOut(600);
+      }, 700);
+
+      // 히어로 제목 타이핑 효과
+      const titleText = "당신은 이 방에서\n탈출할 수 있을까?";
+      let typingIndex = 0;
+      const $heroTitle = $(".hero h1");
+      $heroTitle.html("<span id='typingText'></span><span class='typing-cursor'>|</span>");
+
+      function typeTitle() {
+        typingIndex++;
+        $("#typingText").html(titleText.slice(0, typingIndex).replace(/\n/g, "<br>"));
+        if (typingIndex < titleText.length) {
+          setTimeout(typeTitle, 55);
+        }
+      }
+      typeTitle();
+
+      // 스크롤 진행률, 배경 패럴랙스, 위로가기 버튼
+      $(window).on("scroll", function () {
+        const scrollTop = $(window).scrollTop();
+        const docHeight = $(document).height() - $(window).height();
+        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+
+        $("#scrollProgress").css("width", progress + "%");
+        $(".hero").css("background-position", "center " + (scrollTop * 0.25) + "px");
+
+        if (scrollTop > 500) {
+          $("#topBtn").fadeIn(200);
+        } else {
+          $("#topBtn").fadeOut(200);
+        }
+      });
+
+      $("#topBtn").on("click", function () {
+        $("html, body").animate({ scrollTop: 0 }, 600);
+      });
+
+      // 테마 클릭 시 짧은 pop 애니메이션과 상세 설명 출력
+      const themeDetail = {
+        "사라진 연구원": "추천 인원 2~4명 / 추리 중심",
+        "새벽의 병원": "추천 인원 3~4명 / 공포 중심",
+        "마법사의 서재": "추천 인원 2~5명 / 판타지 중심",
+        "🅿 블랙아웃": "추천 인원 3~5명 / 고난도 "
+      };
+
+      if ($(".theme-detail-box").length === 0) {
+        $("#reservation .left-area").append("<div class='theme-detail-box'><strong>테마 정보</strong><br>테마를 선택하면 상세 정보가 표시됩니다.</div>");
+      }
+
+      $(".theme-card").on("click", function () {
+        const name = $(this).find("h3").text();
+        $(this).addClass("clicked-effect");
+        setTimeout(() => $(this).removeClass("clicked-effect"), 360);
+        $(".theme-detail-box").html("<strong>" + name + "</strong><br>" + themeDetail[name]);
+      });
+
+      $("#themeSelect").on("change", function () {
+        const name = $(this).val();
+        $(".theme-detail-box").html("<strong>" + name + "</strong><br>" + themeDetail[name]);
+      });
+      
+      // input focus 효과
+      $(".form-box input, .form-box textarea, .form-box select").on("focus", function () {
+        $(this).addClass("input-focus");
+      }).on("blur", function () {
+        $(this).removeClass("input-focus");
+      });
+
+      // 연락처 자동 하이픈 처리
+      $("#phone").on("input", function () {
+        let value = $(this).val().replace(/[^0-9]/g, "").slice(0, 11);
+        if (value.length > 7) {
+          value = value.replace(/(\d{3})(\d{4})(\d+)/, "$1-$2-$3");
+        } else if (value.length > 3) {
+          value = value.replace(/(\d{3})(\d+)/, "$1-$2");
+        }
+        $(this).val(value);
+      });
+
+      // 요청사항 글자 수 카운트
+      if ($(".char-count").length === 0) {
+        $("#memo").after("<div class='char-count'>0 / 100</div>");
+      }
+
+      $("#memo").on("input", function () {
+        let value = $(this).val();
+        if (value.length > 100) {
+          value = value.slice(0, 100);
+          $(this).val(value);
+        }
+        $(".char-count").text(value.length + " / 100");
+      });
+
+      // 안내사항 아코디언 효과
+      const noticeDetailText = [
+        "예약 알림을 받지 못했다면 연락처 입력 여부를 다시 확인해야 합니다.",
+        "입장 안내와 사전 설명이 있으므로 15분 전 도착을 권장합니다.",
+        "테마가 시작되면 다음 예약 시간 때문에 환불 처리가 어렵습니다.",
+        "자물쇠, 장치, 소품은 강제로 조작하지 않는 것이 원칙입니다.",
+        "공포 테마는 어두운 공간과 음향 효과가 포함될 수 있습니다."
+      ];
+
+      $(".notice-list li").each(function (index) {
+        if ($(this).next(".notice-detail").length === 0) {
+          $(this).after("<div class='notice-detail'>" + noticeDetailText[index] + "</div>");
+        }
+      });
+
+      $(".notice-list li").on("click", function () {
+        $(this).next(".notice-detail").stop().slideToggle(220);
+      });
+
+      // 예약 실패 시 폼 흔들림, 성공 시 팝업과 confetti 효과
+      $("#reserveBtn").on("click", function () {
+        setTimeout(function () {
+          if ($("#reservationResult").hasClass("error")) {
+            $(".form-box").addClass("shake");
+            setTimeout(() => $(".form-box").removeClass("shake"), 350);
+          } else if ($("#reservationResult").is(":visible")) {
+            $("#reserveModal").css("display", "flex").hide().fadeIn(220);
+            makeConfetti();
+          }
+        }, 80);
+      });
+
+      $("#modalClose, #reserveModal").on("click", function (e) {
+        if (e.target.id === "reserveModal" || e.target.id === "modalClose") {
+          $("#reserveModal").fadeOut(220);
+        }
+      });
+
+      function makeConfetti() {
+        for (let i = 0; i < 34; i++) {
+          const piece = $("<span class='confetti'></span>");
+          piece.css({
+            left: Math.random() * 100 + "vw",
+            animationDelay: Math.random() * 0.35 + "s",
+            opacity: Math.random() * 0.7 + 0.3
+          });
+          $("body").append(piece);
+          setTimeout(() => piece.remove(), 2200);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
